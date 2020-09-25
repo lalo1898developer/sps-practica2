@@ -1,0 +1,83 @@
+# POST me autogenera el id
+POST /nombreindice/_doc
+
+# PUT debo de colocarle manualmente el id
+PUT /nombreindice/_doc/#id
+
+# Metodo Bulk:
+POST /nombreindice/_bulk {contenido de los documentos}
+
+# Me trae toda la información de mi indice:
+GET /nombreindice/_search
+
+# Mapping de mi indice:
+GET /nombreindice/_mapping
+
+# Retornar los indices que tengan esta palabra
+GET /nombreindice/_search
+{
+  "query": {
+    "match": {
+      "FIELD": "TEXT"
+    }
+  }
+}
+
+# Retornar los indices que tengan esta frase
+GET /nombreindice/_search
+{
+  "query": {
+    "match_phrase": {
+      "FIELD": "PHRASE"
+    }
+  }
+}
+
+# Busquedas con 2 o más condiciones...con must_not, es para lo negado (AND)
+GET /nombreindice/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        [
+          {
+            "match": {
+              "FIELD": "TEXT"
+            }
+          },
+          {
+            "match": {
+              "FIELD": "TEXT"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
+
+# Busquedas con 2 o más condiciones...con must_not, es para lo negado (OR)
+GET /nombreindice/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        [
+          {
+            "match": {
+              "FIELD": "TEXT"
+            }
+          },
+          {
+            "match": {
+              "FIELD": "TEXT"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
+
+# sort para ordenar...desc= decendente
+# range para buscar un rango...gte= greater than
